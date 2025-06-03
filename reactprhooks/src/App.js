@@ -1,47 +1,23 @@
-import React, { useState } from 'react';
-//refractoring our class component to our functional component. 
-//Review this later! 
-const App = () => {
-  const [count, setCount] = useState(0);
+import React, { useState, useEffect} from 'react';
 
-  // Define the increment function properly
+const App = () => {
+  const [count, setCount] = useState(0); 
+  
+  useEffect(() => {
+    document.title = `Clicked ${count} times`; 
+  
+
+  })
   const increment = () => {
-    setCount(count + 1);
+    setCount(count + 1); 
   };
 
   return (
     <div>
-      <h2>Counter App</h2>
-      {/* Correct way to comment in JSX */}
-      <button onClick={increment}>
-        Clicked {count} times
-      </button>
+      <h2>counter app</h2>
+      <button onClick={increment}>Clicked {count} times</button>
     </div>
   );
 };
 
 export default App;
-
-
-
-// class App extends Component {
-//this is a functional component so you can't use state like so 
-//   state = {
-//     count: 0 
-//   }
-//   increment = () => {
-//     this.setState({
-//       count: this.state.count + 1 
-//     })
-//   }
-//   render() {
-//     return(
-//       <div>
-//         <h2>Counter App</h2>
-//         <button onClick={this.increment}>Clicked {this.state.count} times
-//         </button>
-//       </div>
-
-//     ); 
-//   } 
-// } 
