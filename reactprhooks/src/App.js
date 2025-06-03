@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+//refractoring our class component to our functional component. 
+//Review this later! 
 const App = () => {
   const [count, setCount] = useState(0);
 
