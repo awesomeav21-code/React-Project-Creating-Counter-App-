@@ -7,9 +7,12 @@ const App = () => {
   // State for the search input
   const [searchQuery, setSearchQuery] = useState('react'); // default query
 
-  // Fetch news based on the current search query
+  // State for the API URL used in fetch
+  const [url, setUrl] = useState('http://hn.algolia.com/api/v1/search?query=react');
+
+  // Fetch news based on the current URL
   const fetchNews = () => {
-    fetch(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`)
+    fetch(url)
       .then(result => result.json())
       .then(data => {
         console.log(data);
@@ -18,22 +21,21 @@ const App = () => {
       .catch(error => console.log(error));
   };
 
-  // Run once when component mounts to load default results
+  // Fetch news whenever the URL changes
   useEffect(() => {
     fetchNews();
-    //this waay you control the way useEffect works if you add 
-    //search query. 
-  }, [searchQuery]);
+    // This useEffect depends on `url`, not `searchQuery`
+  }, [url]);
 
   // Handle input change
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  // Handle form submit (clicking the search button)
+  // Handle form submission: update the URL, which triggers useEffect
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent page reload
-    fetchNews();        // fetch articles based on current input
+    e.preventDefault();
+    setUrl(`http://hn.algolia.com/api/v1/search?query=${searchQuery}`);
   };
 
   return (
@@ -49,6 +51,9 @@ const App = () => {
     </div>
   );
 };
+
+export default App;
+
 
 
 // const App = () => {
@@ -71,4 +76,3 @@ const App = () => {
 //   );
 // };
 
-export default App;
