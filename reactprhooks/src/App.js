@@ -10,13 +10,18 @@ const App = () => {
   // State for the API URL used in fetch
   const [url, setUrl] = useState('http://hn.algolia.com/api/v1/search?query=react');
 
+  const [loading, setLoading] = useState(false); 
   // Fetch news based on the current URL
   const fetchNews = () => {
+    setLoading(true) 
+    //when we get the data, we need to set it to false. 
+    //this is next to the data.hits code. 
     fetch(url)
       .then(result => result.json())
       .then(data => {
         console.log(data);
-        setNews(data.hits);
+        setNews(data.hits); 
+        setLoading(false);
       })
       .catch(error => console.log(error));
   };
@@ -41,6 +46,7 @@ const App = () => {
   return (
     <div>
       <h2>News</h2>
+      {loading ? <h2>Loading ... </h2> : "" }
       <form onSubmit={handleSubmit}>
         <input type="text" value={searchQuery} onChange={handleChange} />
         <button type="submit">Search</button>
